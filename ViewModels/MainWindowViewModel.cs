@@ -11,6 +11,9 @@ using System.Windows;
 using ReceptFromHolodilnik.Infrastructure.Commands;
 using System.Collections.ObjectModel;
 using ReceptFromHolodilnik.Models;
+using Microsoft.Win32;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ReceptFromHolodilnik.ViewModels
 {
@@ -53,10 +56,35 @@ namespace ReceptFromHolodilnik.ViewModels
             }
         }
 
+
+        private ImageSource _filePath;
+
+        public ImageSource FilePath
+        {
+            get => _filePath;
+            private set { _filePath = value; OnPropertyChanged(nameof(FilePath));}
+        }
+        public RegularCommand ChooseImage { get; }
+
+        private bool CanChooseImageExecute(object p) => true;
+
+        private void ChooseImageExecute(object message)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "Выбор изображения",
+                CheckFileExists = true,
+            };
+            if (dialog.ShowDialog() != true) return;
+
+            FilePath = new BitmapImage(new Uri(dialog.FileName));
+        }
+
         public MainWindowViewModel()
         {
             Messages = new ObservableCollection<Message>();
             SendMessage = new RegularCommand(SendMessageExecute, CanSendMessageExecute);
+            ChooseImage = new RegularCommand(ChooseImageExecute, CanChooseImageExecute);
         }
 
     }
