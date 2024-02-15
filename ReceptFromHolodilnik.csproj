@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FastYolo" Version="12.1.0" />
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
     <PackageReference Include="Microsoft.ML" Version="1.7.1" />
     <PackageReference Include="Microsoft.ML.Vision" Version="1.7.1" />

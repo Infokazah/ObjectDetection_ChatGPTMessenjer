@@ -29,18 +29,18 @@
         </Grid.RowDefinitions>
         <StackPanel  Background="#FF33BDBA" Grid.Column="0" Grid.Row="0">
             <TextBlock Text="Итоговый список продуктов" VerticalAlignment="Center" 
-                       TextAlignment="Center" />
-            <TextBlock Background="White" Margin="5" Height="40" Width="431"/>
+                       TextAlignment="Center" FontFamily="Bahnschrift SemiBold Condensed" />
+            <TextBlock Background="White" Margin="5" Height="40" Width="431" Text="{Binding CurrentObjects}"/>
         </StackPanel>
         <Image Margin="20" Grid.Column="0" Grid.Row="1" Source="{Binding FilePath}"/>
         <StackPanel Background="#FF33BDBA" Grid.Column="0" Grid.Row="2">
-            <Button Width="200" Height="72" Background="White" 
-                    Content="Загрузить Картинку" FontSize="20"
-                    Margin="10" Command="{Binding ChooseImage}"/>
+            <Button  Height="72" Background="White" 
+                    Content="Загрузить изображение" FontSize="20"
+                    Margin="10" Command="{Binding ChooseImage}" FontFamily="Bahnschrift SemiBold Condensed"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0" Background="#FF33BDBA">
             <TextBlock Background="#FF33Dbba" Text="Чат-бот помощник" 
-                   FontSize="24" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                   FontSize="24" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bahnschrift SemiBold Condensed"/>
         </StackPanel>
 
 
@@ -48,7 +48,7 @@
                      HorizontalContentAlignment="Stretch" Background="White">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="#FFD8BFD8" CornerRadius="5" Margin="5" 
+                    <Border Background="#FFD8BFD8" CornerRadius="5 0 5 5" Margin="5" 
                                 HorizontalAlignment="{Binding Alignment}">
                         <TextBlock Text="{Binding Text}" Margin="5" HorizontalAlignment="{Binding Alignment}" FontSize="28"/>
                     </Border>
@@ -57,9 +57,9 @@
         </ListBox>
         <StackPanel Background="#FF33BDBA" Grid.Column="1" Grid.Row="2">
             <Border Background="#FF33Dbba" CornerRadius="10,10,10,10" Margin="10" 
-                    HorizontalAlignment="Center" Height="43" Width="772" VerticalAlignment="Center" >
+                    HorizontalAlignment="Center" Height="43" Width="1148" >
                 <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0,0,4,0" >
-                    <TextBox Text="{Binding CurrentMessage}" Margin="5" Width="700" FontSize="24"/>
+                    <TextBox Text="{Binding CurrentMessage}" Margin="5" Width="1084" FontSize="24"/>
                     <Button Command="{Binding SendMessage}" CommandParameter="{Binding CurrentMessage}" 
                         Width="47" Height="40" BorderBrush="Transparent"
                         Background="Transparent">

@@ -14,11 +14,13 @@ using ReceptFromHolodilnik.Models;
 using Microsoft.Win32;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ReceptFromHolodilnik.Services;
 
 namespace ReceptFromHolodilnik.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        private YoloDialog _yoloModel;
         private ObservableCollection<Message> _messages;
 
         public ObservableCollection<Message> Messages
@@ -40,6 +42,16 @@ namespace ReceptFromHolodilnik.ViewModels
                 OnPropertyChanged(nameof(CurrentMessage));
             }
             get => _currentMessage;
+        }
+        private string _currentObjects;
+        public string CurrentObjects
+        {
+            set
+            {
+                _currentObjects = value;
+                OnPropertyChanged(nameof(CurrentObjects));
+            }
+            get => _currentObjects;
         }
 
         public RegularCommand SendMessage { get; }
@@ -77,7 +89,15 @@ namespace ReceptFromHolodilnik.ViewModels
             };
             if (dialog.ShowDialog() != true) return;
 
-            FilePath = new BitmapImage(new Uri(dialog.FileName));
+            BitmapImage image = new BitmapImage(new Uri(dialog.FileName));
+            FilePath = image;
+
+            List <string> DetectedObjects = _yoloModel.DetectObjects(image);
+            foreach (var detectedObject in DetectedObjects)
+            {
+                CurrentObjects += $"{detectedObject}|";
+            }
+            CurrentMessage = $"Что можно приготовить из данных продуктов:{CurrentObjects}";
         }
 
         public MainWindowViewModel()
@@ -85,6 +105,7 @@ namespace ReceptFromHolodilnik.ViewModels
             Messages = new ObservableCollection<Message>();
             SendMessage = new RegularCommand(SendMessageExecute, CanSendMessageExecute);
             ChooseImage = new RegularCommand(ChooseImageExecute, CanChooseImageExecute);
+            _yoloModel = new YoloDialog();
         }
 
     }
