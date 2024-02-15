@@ -21,6 +21,7 @@ namespace ReceptFromHolodilnik.ViewModels
     internal class MainWindowViewModel : ViewModelBase
     {
         private YoloDialog _yoloModel;
+        private PythonModelDialog _pythonModel;
         private ObservableCollection<Message> _messages;
 
         public ObservableCollection<Message> Messages
@@ -63,6 +64,7 @@ namespace ReceptFromHolodilnik.ViewModels
             if(CurrentMessage != "")
             {
                 Messages.Add(new Message(CurrentMessage));
+                _pythonModel.SendMessageToAi(CurrentMessage);
                 CurrentMessage = "";
                 OnPropertyChanged(nameof(Messages));
             }
@@ -106,6 +108,7 @@ namespace ReceptFromHolodilnik.ViewModels
             SendMessage = new RegularCommand(SendMessageExecute, CanSendMessageExecute);
             ChooseImage = new RegularCommand(ChooseImageExecute, CanChooseImageExecute);
             _yoloModel = new YoloDialog();
+            _pythonModel = new PythonModelDialog();
         }
 
     }
