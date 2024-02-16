@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 
 
 namespace ReceptFromHolodilnik.Services
@@ -13,7 +16,35 @@ namespace ReceptFromHolodilnik.Services
     {
         public PythonModelDialog() 
         {
-            Runtime.PythonDLL = "C:\\Users\\Влад\\AppData\\Local\\Programs\\Python\\Python312\\python312.dll";
+            string jsonString = "";
+            string filePath = "found_file.json";
+
+            if (File.Exists(filePath))
+            {
+                jsonString = File.ReadAllText(filePath);
+                jsonString = jsonString.Replace("\"", "");
+            }
+            else
+            {
+                throw new Exception();
+            }
+
+            if(jsonString.Length == 0) 
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    jsonString = openFileDialog.FileName;
+
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonString, Formatting.Indented));
+                }
+                else
+                {
+                    MessageBox.Show("Файлы не выбраны.");
+                }
+            }
+            Runtime.PythonDLL = jsonString;
             PythonEngine.Initialize();
         }  
         public string SendMessageToAi(string str)

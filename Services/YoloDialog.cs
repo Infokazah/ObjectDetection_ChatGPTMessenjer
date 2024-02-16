@@ -16,7 +16,10 @@ namespace ReceptFromHolodilnik.Services
         private YoloWrapper YoloModel;
         public YoloDialog()
         {
-            YoloModel = new YoloWrapper("D:\\Yolo\\yolov3.cfg", "D:\\Yolo\\yolov3.weights", "D:\\Yolo\\coco.names");
+            YoloModel = new YoloWrapper(
+                Path.Combine(Directory.GetCurrentDirectory(),"Yolo\\yolov3.cfg"), 
+                Path.Combine(Directory.GetCurrentDirectory(), "Yolo\\yolov3.weights"), 
+                Path.Combine(Directory.GetCurrentDirectory(), "Yolo\\coco.names"));
         }
 
         public List<string> DetectObjects(BitmapImage bitmapImage) 

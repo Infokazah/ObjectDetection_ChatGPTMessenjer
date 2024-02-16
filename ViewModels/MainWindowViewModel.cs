@@ -20,10 +20,20 @@ namespace ReceptFromHolodilnik.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        //поля для моделей
         private YoloDialog _yoloModel;
         private PythonModelDialog _pythonModel;
-        private ObservableCollection<Message> _messages;
+        #region Аттрибуты
+        //путь до изображения
+        private ImageSource _filePath;
 
+        public ImageSource FilePath
+        {
+            get => _filePath;
+            private set { _filePath = value; OnPropertyChanged(nameof(FilePath)); }
+        }
+        //список для переписки
+        private ObservableCollection<Message> _messages;
         public ObservableCollection<Message> Messages
         {
             get => _messages;
@@ -33,7 +43,7 @@ namespace ReceptFromHolodilnik.ViewModels
                 OnPropertyChanged(nameof(Messages));
             }
         }
-
+        //текущее сообщение
         private string _currentMessage;
         public string CurrentMessage
         {
@@ -44,6 +54,7 @@ namespace ReceptFromHolodilnik.ViewModels
             }
             get => _currentMessage;
         }
+        //список обнаруженных объектов
         private string _currentObjects;
         public string CurrentObjects
         {
@@ -54,7 +65,9 @@ namespace ReceptFromHolodilnik.ViewModels
             }
             get => _currentObjects;
         }
-
+        #endregion
+        #region Команды
+        //отправка сообщений
         public RegularCommand SendMessage { get; }
 
         private bool CanSendMessageExecute(object p) => true;
@@ -69,15 +82,7 @@ namespace ReceptFromHolodilnik.ViewModels
                 CurrentMessage = "";
             }
         }
-
-
-        private ImageSource _filePath;
-
-        public ImageSource FilePath
-        {
-            get => _filePath;
-            private set { _filePath = value; OnPropertyChanged(nameof(FilePath));}
-        }
+        //выбор изображения
         public RegularCommand ChooseImage { get; }
 
         private bool CanChooseImageExecute(object p) => true;
@@ -101,6 +106,7 @@ namespace ReceptFromHolodilnik.ViewModels
             }
             CurrentMessage = $"Что можно приготовить из данных продуктов:{CurrentObjects}";
         }
+        #endregion
 
         public MainWindowViewModel()
         {
