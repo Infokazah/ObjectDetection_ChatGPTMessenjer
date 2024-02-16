@@ -15,4 +15,9 @@
   <ItemGroup>
     <Folder Include="Ai\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="ask_gpt.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

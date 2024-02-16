@@ -64,9 +64,9 @@ namespace ReceptFromHolodilnik.ViewModels
             if(CurrentMessage != "")
             {
                 Messages.Add(new Message(CurrentMessage));
-                _pythonModel.SendMessageToAi(CurrentMessage);
-                CurrentMessage = "";
                 OnPropertyChanged(nameof(Messages));
+                Messages.Add(new Message(_pythonModel.SendMessageToAi(CurrentMessage),HorizontalAlignment.Left));
+                CurrentMessage = "";
             }
         }
 

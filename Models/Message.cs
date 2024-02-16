@@ -17,5 +17,10 @@ namespace ReceptFromHolodilnik.Models
             Text = str;
             Alignment = HorizontalAlignment.Right;
         }
+        public Message(string str, HorizontalAlignment ha)
+        {
+            Text = str;
+            Alignment = ha;
+        }
     }
 }
