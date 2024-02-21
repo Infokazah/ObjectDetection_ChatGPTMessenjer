@@ -14,6 +14,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ai\" />
+    <Folder Include="infrastructure\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WpfBaseLyb">
+      <HintPath>..\WpfBaseLyb\bin\Debug\net7.0-windows\WpfBaseLyb.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Update="ask_gpt.py">
