@@ -74,7 +74,7 @@ namespace ReceptFromHolodilnik.ViewModels
 
         private void SendMessageExecute(object message)
         {
-            if(CurrentMessage != "")
+            if(CurrentMessage != "" && CurrentMessage!=null)
             {
                 Messages.Add(new Message(CurrentMessage));
                 OnPropertyChanged(nameof(Messages));
