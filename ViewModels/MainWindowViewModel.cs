@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ReceptFromHolodilnik.Services;
 using BaseClassesLyb;
+using ReceptFromHolodilnik.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace ReceptFromHolodilnik.ViewModels
 {
@@ -65,13 +67,17 @@ namespace ReceptFromHolodilnik.ViewModels
 
         private bool CanSendMessageExecute(object p) => true;
 
-        private void SendMessageExecute(object message)
+        private async void SendMessageExecute(object message)
         {
-            if(CurrentMessage != "" && CurrentMessage!=null)
+            if (!string.IsNullOrEmpty(CurrentMessage))
             {
                 Messages.Add(new Message(CurrentMessage));
                 OnPropertyChanged(nameof(Messages));
-                Messages.Add(new Message(_pythonModel.SendMessageToAi(CurrentMessage),HorizontalAlignment.Left));
+
+                string result = await Task.Run(() => _pythonModel.SendMessageToAi(CurrentMessage));
+
+                Message messageModel = new Message(result, HorizontalAlignment.Left);
+                Messages.Add(messageModel);
                 CurrentMessage = "";
             }
         }
@@ -93,6 +99,7 @@ namespace ReceptFromHolodilnik.ViewModels
             FilePath = image;
 
             List <string> DetectedObjects = _yoloModel.DetectObjects(image);
+            CurrentObjects = "";
             foreach (var detectedObject in DetectedObjects)
             {
                 CurrentObjects += $"{detectedObject}|";
@@ -101,13 +108,13 @@ namespace ReceptFromHolodilnik.ViewModels
         }
         #endregion
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IPythonModel py, IYoloDialog yolo)
         {
             Messages = new ObservableCollection<Message>();
             SendMessage = new RegularCommand(SendMessageExecute, CanSendMessageExecute);
             ChooseImage = new RegularCommand(ChooseImageExecute, CanChooseImageExecute);
-            _yoloModel = new YoloDialog();
-            _pythonModel = new PythonModelDialog();
+            _yoloModel = (YoloDialog?)yolo;
+            _pythonModel = (PythonModelDialog?)py;
         }
 
     }

@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using ReceptFromHolodilnik.Services.Interfaces;
 
 namespace ReceptFromHolodilnik.Services
 {
-    internal class YoloDialog
+    internal class YoloDialog : IYoloDialog
     {
         private YoloWrapper YoloModel;
         public YoloDialog()

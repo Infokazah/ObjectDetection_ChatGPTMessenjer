@@ -5,8 +5,10 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReceptFromHolodilnik"
-        xmlns:mv="clr-namespace:ReceptFromHolodilnik.ViewModels"
+        xmlns:mv="clr-namespace:ReceptFromHolodilnik.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=mv:MainWindowViewModel}"
         mc:Ignorable="d"
+        DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
         Title="MainWindow" Height="1080" Width="1920" WindowState="Maximized">
     <Window.Resources>
         <SolidColorBrush x:Key="WhiteBackgroundColor" Color="White"/>
@@ -25,9 +27,6 @@
             <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}"/>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <mv:MainWindowViewModel/>
-    </Window.DataContext>
     <Window.InputBindings>
         <KeyBinding Key="DbeEnterWordRegisterMode" Command="{Binding SendMessage}" CommandParameter="{Binding CurrentMessage}"/>
     </Window.InputBindings>

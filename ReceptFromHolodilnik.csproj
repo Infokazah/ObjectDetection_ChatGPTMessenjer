@@ -4,10 +4,12 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <StartupObject>ReceptFromHolodilnik.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FastYolo" Version="12.1.0" />
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.ML.Vision" Version="1.7.1" />
     <PackageReference Include="pythonnet" Version="3.0.3" />
     <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.3.1" />

@@ -8,11 +8,12 @@ using System.Windows;
 using System.IO;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using ReceptFromHolodilnik.Services.Interfaces;
 
 
 namespace ReceptFromHolodilnik.Services
 {
-    internal class PythonModelDialog
+    internal class PythonModelDialog : IPythonModel
     {
         public PythonModelDialog() 
         {
@@ -46,16 +47,16 @@ namespace ReceptFromHolodilnik.Services
             }
             Runtime.PythonDLL = jsonString;
             PythonEngine.Initialize();
-        }  
+        }
         public string SendMessageToAi(string str)
         {
-            using(Py.GIL())
+            using (Py.GIL())
             {
                 var pythonScript = Py.Import("ask_gpt");
                 var message = new PyString(str);
 
-                var result = pythonScript.InvokeMethod("ask_gpt",
-                    new PyObject[] { message });
+                var result = pythonScript.InvokeMethod("ask_gpt", new PyObject[] { message });
+
                 return result.ToString();
             }
         }
