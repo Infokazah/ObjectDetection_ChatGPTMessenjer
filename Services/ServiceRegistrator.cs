@@ -16,6 +16,7 @@ namespace ReceptFromHolodilnik.Services
         {
             services.AddSingleton<IPythonModel, PythonModelDialog>();
             services.AddSingleton<IYoloDialog, YoloDialog>();
+            services.AddSingleton<IYouTubeService, YouTubeFindService>();
             return services;
         }
     }

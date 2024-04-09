@@ -15,11 +15,21 @@ namespace ReceptFromHolodilnik.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+
         //поля для моделей
         private YoloDialog _yoloModel;
         private PythonModelDialog _pythonModel;
+        private YouTubeFindService _youtubeService;
         #region Аттрибуты
         //путь до изображения
+        private string _videoLincs;
+
+        public string VideoLincs
+        {
+            get => _videoLincs;
+            private set { _videoLincs = value; OnPropertyChanged(nameof(VideoLincs)); }
+        }
+
         private ImageSource _filePath;
 
         public ImageSource FilePath
@@ -75,8 +85,10 @@ namespace ReceptFromHolodilnik.ViewModels
                 OnPropertyChanged(nameof(Messages));
 
                 string result = await Task.Run(() => _pythonModel.SendMessageToAi(CurrentMessage));
-
                 Message messageModel = new Message(result, HorizontalAlignment.Left);
+                Messages.Add(messageModel);
+                VideoLincs = await _youtubeService.SearcnVideo(result);
+                messageModel = new Message(result, HorizontalAlignment.Left);
                 Messages.Add(messageModel);
                 CurrentMessage = "";
             }
@@ -108,13 +120,14 @@ namespace ReceptFromHolodilnik.ViewModels
         }
         #endregion
 
-        public MainWindowViewModel(IPythonModel py, IYoloDialog yolo)
+        public MainWindowViewModel(IPythonModel py, IYoloDialog yolo, IYouTubeService youTube)
         {
             Messages = new ObservableCollection<Message>();
             SendMessage = new RegularCommand(SendMessageExecute, CanSendMessageExecute);
             ChooseImage = new RegularCommand(ChooseImageExecute, CanChooseImageExecute);
             _yoloModel = (YoloDialog?)yolo;
             _pythonModel = (PythonModelDialog?)py;
+            _youtubeService = (YouTubeFindService)youTube;
         }
 
     }
