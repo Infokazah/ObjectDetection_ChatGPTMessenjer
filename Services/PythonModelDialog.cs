@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using ReceptFromHolodilnik.Services.Interfaces;
+using System.Diagnostics;
 
 
 namespace ReceptFromHolodilnik.Services
@@ -17,6 +18,18 @@ namespace ReceptFromHolodilnik.Services
     {
         public PythonModelDialog() 
         {
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.RedirectStandardInput = true;
+           
+            process.Start();
+
+            
+            process.StandardInput.WriteLine("pip install -U g4f[all]");
+
+           
+            process.WaitForExit();
             string jsonString = "";
             string filePath = "found_file.json";
 
@@ -50,14 +63,22 @@ namespace ReceptFromHolodilnik.Services
         }
         public string SendMessageToAi(string str)
         {
-            using (Py.GIL())
+            try 
             {
-                var pythonScript = Py.Import("ask_gpt");
-                var message = new PyString(str);
 
-                var result = pythonScript.InvokeMethod("ask_gpt", new PyObject[] { message });
+                using (Py.GIL())
+                {
+                    var pythonScript = Py.Import("ask_gpt");
+                    var message = new PyString(str);
 
-                return result.ToString();
+                    var result = pythonScript.InvokeMethod("ask_gpt", new PyObject[] { message });
+
+                    return result.ToString();
+                }
+            }
+            catch (Exception ex) 
+            {
+                return "Ебал всё это";
             }
         }
     }

@@ -84,7 +84,7 @@ namespace ReceptFromHolodilnik.ViewModels
                 Messages.Add(new Message(CurrentMessage));
                 OnPropertyChanged(nameof(Messages));
 
-                string result = await Task.Run(() => _pythonModel.SendMessageToAi(CurrentMessage));
+                string result = _pythonModel.SendMessageToAi(CurrentMessage);
                 Message messageModel = new Message(result, HorizontalAlignment.Left);
                 Messages.Add(messageModel);
                 VideoLincs = await _youtubeService.SearcnVideo(result);

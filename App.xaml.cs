@@ -1,25 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReceptFromHolodilnik.Services;
-using ReceptFromHolodilnik.ViewModels;
-using ReceptFromHolodilnik;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using ReceptFromHolodilnik.Services.Interfaces;
 
 namespace ReceptFromHolodilnik
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
+
     public partial class App : Application
     {
         public static bool IsDesignMode { get; private set; } = true;
@@ -49,10 +38,8 @@ namespace ReceptFromHolodilnik
             .RegisterServices()
             .RegisterViewModels();
 
-#pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
         public static string CurrentDirectory => IsDesignMode ? Path.GetDirectoryName(GetSourceCodePath())
             : Environment.CurrentDirectory;
-#pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
 
         private static string GetSourceCodePath([CallerFilePath] string Path = null) => Path;
     }
